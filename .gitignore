@@ -1,0 +1,4 @@
+.env
+.project-service
+*.log
+*.pyc
