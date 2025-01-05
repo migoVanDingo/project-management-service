@@ -48,7 +48,7 @@ class RequestCreateProject(AbstractHandler):
                   
 
             current_app.logger.info(f"{self.request_id} --- {self.__class__.__name__} --- Create project complete: {insert_project_response['response']}")
-            return insert_project_response["response"]["project_id"]
+            return insert_project_response["response"]
 
           
         except Exception as e:

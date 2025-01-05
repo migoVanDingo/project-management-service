@@ -1,0 +1,20 @@
+###
+# CREATE AND CLONE PROJECT
+POST http://localhost:5013/api/project
+Content-Type: application/json
+
+{
+  "name": "test1",
+  "description": "test1 project",
+  "user_id": "user1234",
+  "entity_id": "entity1234",
+  "entity_type": "team",
+  "clone_project": true,
+  "git_url": "https://github.com/migoVanDingo/activity-detection-inference-service.git"
+
+}
+
+
+###
+# GET PROJECT
+GET http://localhost:5013/api/project?project_id=PROJ9EDALS5T9HPLGOXWSQ6PQ

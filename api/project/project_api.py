@@ -23,7 +23,7 @@ def create_project():
 
 @project_api.route('/project', methods=['GET'])
 def read_project():
-    args = request.args
+    args = request.args.to_dict()
     request_id = g.request_id
     current_app.logger.info(f"{request_id} --- {__name__} --- {request.method} --- {request.url}")
 
@@ -34,7 +34,7 @@ def read_project():
 
 @project_api.route('/project/all', methods=['GET'])
 def list_project():
-    args = request.args
+    args = request.args.to_dict()
     request_id = g.request_id
     current_app.logger.info(f"{request_id} --- {__name__} --- {request.method} --- {request.url}")
 
