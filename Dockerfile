@@ -6,6 +6,12 @@ WORKDIR /app
 # Install system dependencies (including git)
 RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
 
+# Verify git installation
+RUN git --version
+
+# Set environment variable for GitPython
+ENV GIT_PYTHON_GIT_EXECUTABLE=/usr/bin/git
+
 # Copy the current directory contents into the container
 COPY . /app
 
