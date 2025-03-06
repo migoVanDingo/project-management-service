@@ -7,6 +7,16 @@ class Constant:
     base_url = "http://localhost:"
     dao_port = "5010"
 
+    services = {
+        "JOB": {
+            "PORT": "5017",
+            "ENDPOINT": {
+                "CREATE-JOB": "/api/job/new",
+            }
+        },
+        
+    }
+
     project_dir_tree = [             # Git folder
         'pipelines',            # Stores pipeline definitions
         'params',               # Stores parameter files
