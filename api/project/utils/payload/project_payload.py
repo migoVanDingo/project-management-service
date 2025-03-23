@@ -54,11 +54,17 @@ class ProjectPayload:
         return payload
     
     @staticmethod
-    def form_save_project_git_info_payload(data: dict) -> IInsertProjectGitInfo:
+    def form_save_project_version_payload(data: dict):
         payload = {
             "project_id": data.get("project_id"),
-            "latest_commit_hash": data.get("commit"),
-            "git_clone_link": data.get("url"),
-            "branch": data.get("branch")
+            "commit": data.get("commit_hash"),
+            "clone_url": data.get("git_url"),
+            "branch": data.get("branch"),
+            "owner": data.get("user_id"),
+            "created_by": data.get("user_id"),
+            "path": data.get("path")
         }
+
         return payload
+    
+

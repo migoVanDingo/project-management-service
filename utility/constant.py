@@ -3,6 +3,7 @@ class Constant:
 
     project_root_dir = "/Users/bubz/Developer/master-project/tests/test-projects-root"
     path_dir = "projects"
+    user_dir = "user"
 
     base_url = "http://localhost:"
     dao_port = "5010"
@@ -37,6 +38,7 @@ class Constant:
     table = {
         "PROJECT": "project",
         "PROJECT_GIT_INFO": "project_git_info",
+        "PROJECT_VERSION": "project_version",
     }
 
     delimeter = {

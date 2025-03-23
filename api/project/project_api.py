@@ -1,11 +1,21 @@
 from flask import Blueprint, current_app, g, json, request
 
+from api.project.handler.request_clone_project import RequestCloneProject
+from api.project.handler.request_configure_env import RequestConfigureEnv
 from api.project.handler.request_create_project import RequestCreateProject
+from api.project.handler.request_create_project_directory import RequestCreateProjectDirectory
 from api.project.handler.request_delete_project import RequestDeleteProject
 from api.project.handler.request_get_project import RequestGetProject
 from api.project.handler.request_get_project_list import RequestGetProjectList
+from api.project.handler.request_init_venv import RequestInitVenv
+from api.project.handler.request_install_requirements import RequestInstallRequirements
 from api.project.handler.request_job_clone_repo_project import RequestJobCloneRepoProject
 from api.project.handler.request_update_project import RequestUpdateProject
+from api.project.utils.payload.payload_configure_env import PayloadConfigureEnv
+from api.project.utils.payload.payload_install_dependencies import PayloadInstallDependencies
+from api.project.utils.payload.payload_clone_project import PayloadCloneProject
+from api.project.utils.payload.payload_create_project_directory import PayloadCreateProjectDirectory
+from api.project.utils.payload.payload_init_venv import PayloadInitVenv
 
 
 project_api = Blueprint('project_api', __name__)
@@ -67,7 +77,7 @@ def delete_project(id):
 
 
 @project_api.route('/project/clone', methods=['POST'])
-def clone_project():
+def job_clone_project():
     request_id = g.request_id
     current_app.logger.info(f"{request_id} --- {__name__} --- {request.method} --- {request.url}")
 
@@ -89,7 +99,7 @@ def create_project_directory():
     else:
         request_id = g.request_id
 
-    api_request = RequestCreateProjectDirectory(request_id, )
+    api_request = RequestCreateProjectDirectory(request_id, PayloadCreateProjectDirectory.form_payload(data))
     response = api_request.do_process()
 
     if response["status"] == "SUCCESS":
@@ -109,7 +119,7 @@ def clone_project():
     else:
         request_id = g.request_id
 
-    api_request = RequestCloneProject(request_id, )
+    api_request = RequestCloneProject(request_id, PayloadCloneProject.form_payload(data))
     response = api_request.do_process()
 
     if response["status"] == "SUCCESS":
@@ -130,7 +140,9 @@ def init_venv():
     else:
         request_id = g.request_id
 
-    api_request = RequestInitVenv(request_id, )
+    current_app.logger.info(f"{request_id} --- {__name__} --- {request.method} --- init_venv DATA: {data}")
+
+    api_request = RequestInitVenv(request_id, PayloadInitVenv.form_payload(data))
     response = api_request.do_process()
 
     if response["status"] == "SUCCESS":
@@ -150,7 +162,7 @@ def install_requirements():
     else:
         request_id = g.request_id
 
-    api_request = RequestInstallRequirements(request_id, )
+    api_request = RequestInstallRequirements(request_id, PayloadInstallDependencies.form_payload(data))
     response = api_request.do_process()
 
     if response["status"] == "SUCCESS":
@@ -160,7 +172,7 @@ def install_requirements():
     
     return response
 
-@project_api.route('/project/configure/variables', methods=['POST'])
+@project_api.route('/project/config/env', methods=['POST'])
 def configure_variables():
     data = json.loads(request.data)
     if "request_id" in data:
@@ -170,7 +182,7 @@ def configure_variables():
     else:
         request_id = g.request_id
 
-    api_request = RequestConfigureVariables(request_id, )
+    api_request = RequestConfigureEnv(request_id, PayloadConfigureEnv.form_payload(data))
     response = api_request.do_process()
 
     if response["status"] == "SUCCESS":
